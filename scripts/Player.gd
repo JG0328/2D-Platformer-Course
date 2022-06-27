@@ -13,10 +13,7 @@ func _ready():
 
 
 func _process(delta):
-	var moveVector = Vector2.ZERO
-	moveVector.x = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
-	moveVector.y = -1 if Input.is_action_just_pressed("jump") else 0
-
+	var moveVector = get_movement_vector()
 	velocity.x += moveVector.x * horizontalAcceleration * delta
 
 	if moveVector.x == 0:
@@ -32,3 +29,10 @@ func _process(delta):
 	else:
 		velocity.y += gravity * delta
 	velocity = move_and_slide(velocity, Vector2.UP)
+
+
+func get_movement_vector():
+	var moveVector = Vector2.ZERO
+	moveVector.x = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
+	moveVector.y = -1 if Input.is_action_just_pressed("jump") else 0
+	return moveVector
